@@ -6,7 +6,7 @@
 /*   By: trecomps <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 17:58:09 by trecomps          #+#    #+#             */
-/*   Updated: 2018/10/18 14:44:01 by trecomps         ###   ########.fr       */
+/*   Updated: 2018/10/18 15:33:58 by trecomps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,21 @@ void		dec_to_hex(uint32_t dec, char *buf)
 	}
 }
 
-char			*h_values_hexstr(uint32_t *v, uint32_t size)
+char			*h_values_hexstr(uint32_t *v, uint32_t size, int is_be)
 {
 	char		*md;
+	uint32_t	temp;
 	uint32_t	i;
 
 	i = 0;
 	md = (char *)ft_memalloc(8 * size + 1);
 	while (i < size)
 	{
-		printf("%x\n", v[i]);
-		dec_to_hex(swap_uint32(v[i]), md + (i * 8));
+		if (!is_be)
+			temp = swap_uint32(v[i]);
+		else
+			temp = v[i];
+		dec_to_hex(temp, md + (i * 8));
 		i++;
 	}
 	return (md);

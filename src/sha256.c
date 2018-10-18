@@ -6,7 +6,7 @@
 /*   By: trecomps <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/18 10:46:52 by trecomps          #+#    #+#             */
-/*   Updated: 2018/10/18 15:12:58 by trecomps         ###   ########.fr       */
+/*   Updated: 2018/10/18 15:34:29 by trecomps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ char			*sha256(char *message)
 	uint32_t	offset;
 	uint32_t	temp[8];
 
-	md = padding_md5_sha2(message);
+	md = padding_md5_sha2(message, TRUE);
 	init_h_values(v);
 	offset = 0;
 	while (offset < md.md_lenght)
@@ -107,5 +107,5 @@ char			*sha256(char *message)
 		add_tab_values(v, temp, 8);
 		offset += 512 / 8;
 	}
-	return (h_values_hexstr(v, 8));
+	return (h_values_hexstr(v, 8, TRUE));
 }

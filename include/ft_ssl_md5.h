@@ -6,7 +6,7 @@
 /*   By: trecomps <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 11:20:32 by trecomps          #+#    #+#             */
-/*   Updated: 2018/10/18 12:34:47 by trecomps         ###   ########.fr       */
+/*   Updated: 2018/10/18 15:33:33 by trecomps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 # include "libft.h"
 # include "bitswap.h"
 # include "hash_tools.h"
+
+# define TRUE 1
+# define FALSE 0
 
 typedef struct		s_md
 {
@@ -30,7 +33,7 @@ void			calc_fg_i_48(uint32_t i, uint32_t v[4], uint32_t val[2]);
 void			calc_fg_i_64(uint32_t i, uint32_t v[4], uint32_t val[2]);
 char			*md5(char *message);
 char			*sha256(char *message);
-t_md			padding_md5_sha2(char const *message);
-char			*h_values_hexstr(uint32_t *v, uint32_t size);
+t_md			padding_md5_sha2(char const *message, int is_be);
+char			*h_values_hexstr(uint32_t *v, uint32_t size, int is_be);
 
 #endif
