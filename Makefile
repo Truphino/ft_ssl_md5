@@ -6,7 +6,7 @@
 #    By: dgaitsgo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/09/26 14:32:25 by dgaitsgo          #+#    #+#              #
-#    Updated: 2018/10/17 19:53:25 by trecomps         ###   ########.fr        #
+#    Updated: 2018/10/18 11:41:38 by trecomps         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC_FILES = \
 ./src/bitswap.c\
 ./src/md5_fg_values.c\
 ./src/h_values_hexstr.c\
+./src/hash_tools.c\
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 

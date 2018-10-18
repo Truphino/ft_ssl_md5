@@ -6,76 +6,84 @@
 /*   By: trecomps <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 16:28:06 by trecomps          #+#    #+#             */
-/*   Updated: 2018/10/17 17:13:41 by trecomps         ###   ########.fr       */
+/*   Updated: 2018/10/18 11:11:24 by trecomps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl_md5.h"
 
-t_f_g_values		calc_fg_i_16(uint32_t i, t_h_values v)
+void			calc_fg_i_16(uint32_t i, uint32_t v[4], uint32_t f_g[2])
 {
-	t_f_g_values	val;
+	uint32_t	f;
+	uint32_t	g;
 
 	if (i < 16)
 	{
-		val.f = (v.h1 & v.h2) | ((~v.h1) & v.h3);
-		val.g = i;
+		f = (v[1] & v[2]) | ((~v[1]) & v[3]);
+		g = i;
 	}
 	else
 	{
-		val.f = 0;
-		val.g = 0;
+		f = 0;
+		g = 0;
 	}
-	return (val);
+	f_g[0] = f;
+	f_g[1] = g;
 }
 
-t_f_g_values		calc_fg_i_32(uint32_t i, t_h_values v)
+void		calc_fg_i_32(uint32_t i, uint32_t v[4], uint32_t f_g[2])
 {
-	t_f_g_values	val;
+	uint32_t	f;
+	uint32_t	g;
 
 	if (i < 32)
 	{
-		val.f = (v.h3 & v.h1) | ((~v.h3) & v.h2);
-		val.g = (5*i + 1) % 16;
+		f = (v[3] & v[1]) | ((~v[3]) & v[2]);
+		g = (5*i + 1) % 16;
 	}
 	else
 	{
-		val.f = 0;
-		val.g = 0;
+		f = 0;
+		g = 0;
 	}
-	return (val);
+	f_g[0] = f;
+	f_g[1] = g;
 }
 
-t_f_g_values		calc_fg_i_48(uint32_t i, t_h_values v)
+void		calc_fg_i_48(uint32_t i, uint32_t v[4], uint32_t f_g[2])
 {
-	t_f_g_values	val;
+	uint32_t	f;
+	uint32_t	g;
 
 	if (i < 48)
 	{
-		val.f = v.h1 ^ v.h2 ^ v.h3;
-		val.g = (3*i + 5) % 16;
+		f = v[1] ^ v[2] ^ v[3];
+		g = (3*i + 5) % 16;
 	}
 	else
 	{
-		val.f = 0;
-		val.g = 0;
+		f = 0;
+		g = 0;
 	}
-	return (val);
+	f_g[0] = f;
+	f_g[1] = g;
 }
 
-t_f_g_values		calc_fg_i_64(uint32_t i, t_h_values v)
+void		calc_fg_i_64(uint32_t i, uint32_t v[4], uint32_t f_g[2])
 {
-	t_f_g_values	val;
+	uint32_t	f;
+	uint32_t	g;
 
 	if (i < 64)
 	{
-		val.f = v.h2 ^ (v.h1 | (~v.h3));
-		val.g = (7*i) % 16;
+		f = v[2] ^ (v[1] | (~v[3]));
+		g = (7*i) % 16;
 	}
 	else
 	{
-		val.f = 0;
-		val.g = 0;
+		f = 0;
+		g = 0;
 	}
-	return (val);
+	f_g[0] = f;
+	f_g[1] = g;
 }

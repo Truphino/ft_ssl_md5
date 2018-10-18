@@ -6,7 +6,7 @@
 /*   By: trecomps <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 19:39:51 by trecomps          #+#    #+#             */
-/*   Updated: 2018/10/18 10:20:14 by trecomps         ###   ########.fr       */
+/*   Updated: 2018/10/18 11:37:38 by trecomps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,57 +35,39 @@ static const uint32_t k[] = {
 	0x6fa87e4f, 0xfe2ce6e0, 0xa3014314, 0x4e0811a1,
 	0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391};
 
-static t_h_values	add_h_values(t_h_values a, t_h_values b)
+static void		init_h_values(uint32_t v[4])
 {
-	a.h0 += b.h0;
-	a.h1 += b.h1;
-	a.h2 += b.h2;
-	a.h3 += b.h3;
-	return (a);
+	v[0] = 0x67452301;
+	v[1] = 0xefcdab89;
+	v[2] = 0x98badcfe;
+	v[3] = 0x10325476;
 }
 
-static t_h_values	init_h_values(void)
-{
-	t_h_values		v;
-
-	v.h0 = 0x67452301;
-	v.h1 = 0xefcdab89;
-	v.h2 = 0x98badcfe;
-	v.h3 = 0x10325476;
-	return (v);
-}
-
-static uint32_t		circle_leftrotate(uint32_t x, uint32_t c)
-{
-	return ((x << c) | (x >> (32 - c)));
-}
-
-t_h_values	md5_main_loop(uint32_t *chunk, t_h_values v)
+void				md5_main_loop(uint32_t *chunk, uint32_t v[4])
 {
 	uint32_t		i;
-	t_f_g_values	val;
 	uint32_t		temp;
+	uint32_t		f_g[2];
 
 	i = 0;
 	while (i < 64)
 	{
 		if (i < 16)
-			val = calc_fg_i_16(i, v);
+			calc_fg_i_16(i, v, f_g);
 		else if (i < 32)
-			val = calc_fg_i_32(i, v);
+			calc_fg_i_32(i, v, f_g);
 		else if (i < 48)
-			val = calc_fg_i_48(i, v);
+			calc_fg_i_48(i, v, f_g);
 		else
-			val = calc_fg_i_64(i, v);
-		temp = v.h3;
-		v.h3 = v.h2;
-		v.h2 = v.h1;
-		v.h1 = v.h1 + circle_leftrotate(v.h0 + val.f + k[i] + chunk[val.g],
+			calc_fg_i_64(i, v, f_g);
+		temp = v[3];
+		v[3] = v[2];
+		v[2] = v[1];
+		v[1] = v[1] + circle_leftrotate(v[0] + f_g[0] + k[i] + chunk[f_g[1]],
 											r[i]);
-		v.h0 = temp;
+		v[0] = temp;
 		i++;
 	}
-	return (v);
 }
 
 char		*md5(char *message)
@@ -93,16 +75,19 @@ char		*md5(char *message)
 	t_md		md;
 	int			offset;
 	uint32_t	*chunk;
-	t_h_values	v;
+	uint32_t	v[4];
+	uint32_t	temp[4];
 
-	md = padding_md5(message);
-	v = init_h_values();
+	md = padding_md5_sha2(message);
+	init_h_values(v);
 	offset = 0;
 	while (offset < md.md_lenght)
 	{
 		chunk = (uint32_t *)(md.str + offset);
-		v = add_h_values(md5_main_loop(chunk, v), v);
+		ft_memcpy(temp, v, 4 * sizeof(uint32_t));
+		md5_main_loop(chunk, temp);
+		add_tab_values(v, temp, 4);
 		offset += 512 / 8;
 	}
-	return (h_values_hexstr(v));
+	return (h_values_hexstr(v, 4));
 }

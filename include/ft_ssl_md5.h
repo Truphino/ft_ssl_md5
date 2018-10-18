@@ -6,7 +6,7 @@
 /*   By: trecomps <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 11:20:32 by trecomps          #+#    #+#             */
-/*   Updated: 2018/10/18 10:25:02 by trecomps         ###   ########.fr       */
+/*   Updated: 2018/10/18 11:36:58 by trecomps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "externals_headers.h"
 # include "libft.h"
 # include "bitswap.h"
+# include "hash_tools.h"
 
 typedef struct		s_md
 {
@@ -23,26 +24,13 @@ typedef struct		s_md
 	uint64_t		md_lenght;
 }					t_md;
 
-typedef struct		s_h_values
-{
-	uint32_t	h0;
-	uint32_t	h1;
-	uint32_t	h2;
-	uint32_t	h3;
-}					t_h_values;
-
-typedef struct		s_f_g_values
-{
-	uint32_t	f;
-	uint32_t	g;
-}					t_f_g_values;
-
-t_f_g_values	calc_fg_i_16(uint32_t i, t_h_values v);
-t_f_g_values	calc_fg_i_32(uint32_t i, t_h_values v);
-t_f_g_values	calc_fg_i_48(uint32_t i, t_h_values v);
-t_f_g_values	calc_fg_i_64(uint32_t i, t_h_values v);
+void			calc_fg_i_16(uint32_t i, uint32_t v[4], uint32_t val[2]);
+void			calc_fg_i_32(uint32_t i, uint32_t v[4], uint32_t val[2]);
+void			calc_fg_i_48(uint32_t i, uint32_t v[4], uint32_t val[2]);
+void			calc_fg_i_64(uint32_t i, uint32_t v[4], uint32_t val[2]);
 char			*md5(char *message);
-t_md			padding_md5(char const *message);
-char			*h_values_hexstr(t_h_values v);
+char			*sha256(char *message);
+t_md			padding_md5_sha2(char const *message);
+char			*h_values_hexstr(uint32_t *v, uint32_t size);
 
 #endif

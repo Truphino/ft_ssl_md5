@@ -6,13 +6,13 @@
 /*   By: trecomps <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 11:35:11 by trecomps          #+#    #+#             */
-/*   Updated: 2018/10/17 19:01:40 by trecomps         ###   ########.fr       */
+/*   Updated: 2018/10/18 10:45:45 by trecomps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl_md5.h"
 
-t_md			padding_md5(char const *message)
+t_md			padding_md5_sha2(char const *message)
 {
 	uint64_t	message_lenght;
 	t_md		md;

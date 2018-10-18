@@ -1,44 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   h_values_hexstr.c                                  :+:      :+:    :+:   */
+/*   hash_tools.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: trecomps <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/17 17:58:09 by trecomps          #+#    #+#             */
-/*   Updated: 2018/10/18 11:29:13 by trecomps         ###   ########.fr       */
+/*   Created: 2018/10/18 11:34:37 by trecomps          #+#    #+#             */
+/*   Updated: 2018/10/18 11:38:28 by trecomps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ssl_md5.h"
+#include <stdint.h>
 
-void		dec_to_hex(uint32_t dec, char *buf)
+uint32_t		circle_leftrotate(uint32_t x, uint32_t c)
 {
-	unsigned int	i;
-	unsigned int	tmp;
-
-	i = 0;
-	while (++i <= 32 / 4)
-	{
-		tmp = (dec >> ((32 - i * 4))) & 0xF;
-		if (tmp < 10)
-			buf[i - 1] = '0' + tmp;
-		else
-			buf[i - 1] = 'a' + tmp - 10;
-	}
+	return ((x << c) | (x >> (32 - c)));
 }
 
-char			*h_values_hexstr(uint32_t *v, uint32_t size)
+void			add_tab_values(uint32_t *a, uint32_t *b, uint32_t size)
 {
-	char		*md;
-	uint32_t	i;
+	uint32_t		i;
 
 	i = 0;
-	md = (char *)ft_memalloc(8 * size + 1);
 	while (i < size)
 	{
-		dec_to_hex(swap_uint32(v[i]), md + (i * 8));
+		a[i] += b[i];
 		i++;
 	}
-	return (md);
 }
