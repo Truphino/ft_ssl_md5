@@ -6,7 +6,7 @@
 /*   By: trecomps <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 11:22:38 by trecomps          #+#    #+#             */
-/*   Updated: 2018/10/18 10:42:36 by trecomps         ###   ########.fr       */
+/*   Updated: 2018/10/18 12:52:10 by trecomps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,5 @@ int			main(int argc, char **argv)
 
 	ft_putendl(str);
 	ft_putendl(md5(str));
+	ft_putendl(sha256(str));
 }

@@ -6,31 +6,41 @@
 #    By: dgaitsgo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/09/26 14:32:25 by dgaitsgo          #+#    #+#              #
-#    Updated: 2018/10/18 11:41:38 by trecomps         ###   ########.fr        #
+#    Updated: 2018/10/18 12:51:17 by trecomps         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_ssl
 
 SRC_DIR = ./src
-OBJ_DIR = ./obs
+OBJ_DIR = ./obj
 INC_DIR = ./include
 
-SRC_FILES = \
-./src/main.c\
-./src/md5.c\
-./src/padding.c\
-./src/bitswap.c\
-./src/md5_fg_values.c\
-./src/h_values_hexstr.c\
-./src/hash_tools.c\
+SRC_NAME_FILES =\
+main.c\
+md5.c\
+padding.c\
+bitswap.c\
+md5_fg_values.c\
+h_values_hexstr.c\
+hash_tools.c\
+sha_helpers.c\
+sha256.c\
 
-OBJ_FILES = $(SRC_FILES:.c=.o)
+SRC_FILES = $(addprefix $(SRC_DIR)/,$(SRC_NAME_FILES))
+
+OBJ_NAME_FILES = $(SRC_NAME_FILES:.c=.o)
+
+OBJ_FILES = $(addprefix $(OBJ_DIR)/,$(OBJ_NAME_FILES))
 
 INC_FILES = \
 ./include/externals_headers.h\
 ./include/ft_ssl_md5.h\
-./include/libft.h
+./include/libft.h\
+./include/bitswap.h\
+./include/get_next_line.h\
+./include/hash_tools.h\
+./include/sha_helpers.h\
 
 LIB_DIR = ./lib/libft
 
@@ -44,7 +54,7 @@ $(NAME): $(OBJ_FILES)
 
 all: $(NAME)
 
-%.o:%.c $(INC_FILES)
+$(OBJ_DIR)/%.o:$(SRC_DIR)/%.c $(INC_FILES)
 	gcc -g -c -I$(INC_DIR) $< -o $@
 
 clean:

@@ -6,7 +6,7 @@
 /*   By: trecomps <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 19:39:51 by trecomps          #+#    #+#             */
-/*   Updated: 2018/10/18 11:37:38 by trecomps         ###   ########.fr       */
+/*   Updated: 2018/10/18 12:03:31 by trecomps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void				md5_main_loop(uint32_t *chunk, uint32_t v[4])
 		temp = v[3];
 		v[3] = v[2];
 		v[2] = v[1];
-		v[1] = v[1] + circle_leftrotate(v[0] + f_g[0] + k[i] + chunk[f_g[1]],
+		v[1] = v[1] + cl_rotate(v[0] + f_g[0] + k[i] + chunk[f_g[1]],
 											r[i]);
 		v[0] = temp;
 		i++;

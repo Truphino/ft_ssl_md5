@@ -6,7 +6,7 @@
 /*   By: trecomps <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 17:58:09 by trecomps          #+#    #+#             */
-/*   Updated: 2018/10/18 11:29:13 by trecomps         ###   ########.fr       */
+/*   Updated: 2018/10/18 14:44:01 by trecomps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ char			*h_values_hexstr(uint32_t *v, uint32_t size)
 	md = (char *)ft_memalloc(8 * size + 1);
 	while (i < size)
 	{
+		printf("%x\n", v[i]);
 		dec_to_hex(swap_uint32(v[i]), md + (i * 8));
 		i++;
 	}

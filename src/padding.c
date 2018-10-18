@@ -6,7 +6,7 @@
 /*   By: trecomps <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 11:35:11 by trecomps          #+#    #+#             */
-/*   Updated: 2018/10/18 10:45:45 by trecomps         ###   ########.fr       */
+/*   Updated: 2018/10/18 15:10:08 by trecomps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_md			padding_md5_sha2(char const *message)
 	md.str[message_lenght] = 128;
 	//md[message_lenght] = 0b10000000;
 	message_lenght *= 8;
+	message_lenght = swap_uint64(message_lenght);
 	ft_memcpy(md.str + md.md_lenght, &message_lenght, 8);
 	return (md);
 }
