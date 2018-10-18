@@ -6,7 +6,7 @@
 /*   By: trecomps <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 19:39:51 by trecomps          #+#    #+#             */
-/*   Updated: 2018/10/17 19:55:19 by trecomps         ###   ########.fr       */
+/*   Updated: 2018/10/18 10:20:14 by trecomps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ t_h_values	md5_main_loop(uint32_t *chunk, t_h_values v)
 			val = calc_fg_i_64(i, v);
 		temp = v.h3;
 		v.h3 = v.h2;
+		v.h2 = v.h1;
 		v.h1 = v.h1 + circle_leftrotate(v.h0 + val.f + k[i] + chunk[val.g],
 											r[i]);
 		v.h0 = temp;

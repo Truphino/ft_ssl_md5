@@ -6,7 +6,7 @@
 /*   By: trecomps <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 11:20:32 by trecomps          #+#    #+#             */
-/*   Updated: 2018/10/17 18:55:31 by trecomps         ###   ########.fr       */
+/*   Updated: 2018/10/18 10:25:02 by trecomps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "externals_headers.h"
 # include "libft.h"
+# include "bitswap.h"
 
 typedef struct		s_md
 {
