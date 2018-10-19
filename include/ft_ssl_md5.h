@@ -6,7 +6,7 @@
 /*   By: trecomps <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 11:20:32 by trecomps          #+#    #+#             */
-/*   Updated: 2018/10/18 15:33:33 by trecomps         ###   ########.fr       */
+/*   Updated: 2018/10/19 11:44:06 by trecomps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,12 @@
 # include "libft.h"
 # include "bitswap.h"
 # include "hash_tools.h"
+# include "flag_warpper.h"
 
 # define TRUE 1
 # define FALSE 0
+# define BUF_SIZE 512
+# define FILE_COMMAND_LINE NULL
 
 typedef struct		s_md
 {
@@ -35,5 +38,6 @@ char			*md5(char *message);
 char			*sha256(char *message);
 t_md			padding_md5_sha2(char const *message, int is_be);
 char			*h_values_hexstr(uint32_t *v, uint32_t size, int is_be);
+char			*hash_file(t_flag_warpper fw, char *filename);
 
 #endif

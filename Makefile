@@ -6,7 +6,7 @@
 #    By: dgaitsgo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/09/26 14:32:25 by dgaitsgo          #+#    #+#              #
-#    Updated: 2018/10/18 12:51:17 by trecomps         ###   ########.fr        #
+#    Updated: 2018/10/19 12:28:31 by trecomps         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,9 @@ h_values_hexstr.c\
 hash_tools.c\
 sha_helpers.c\
 sha256.c\
+hash_file.c\
+parse_cli.c\
+errors.c\
 
 SRC_FILES = $(addprefix $(SRC_DIR)/,$(SRC_NAME_FILES))
 
