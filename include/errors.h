@@ -14,6 +14,7 @@
 # define ERRORS_H
 
 #include "libft.h"
+#include <errno.h>
 
 typedef enum		e_errors_type
 {

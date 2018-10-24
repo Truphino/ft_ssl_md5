@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "errors.h"
+#include "macros.h"
 
 void			no_command_error(char *p_name, char *message)
 {

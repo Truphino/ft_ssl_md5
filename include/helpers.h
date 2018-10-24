@@ -1,35 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_cli.h                                        :+:      :+:    :+:   */
+/*   helpers.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: trecomps <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/19 11:53:25 by trecomps          #+#    #+#             */
-/*   Updated: 2018/10/19 12:47:26 by trecomps         ###   ########.fr       */
+/*   Created: 2018/10/24 11:54:01 by trecomps          #+#    #+#             */
+/*   Updated: 2018/10/24 11:54:03 by trecomps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSE_CLI_H
-# define PARSE_CLI_H
+#ifndef     HELPERS_H
+# define	HELPERS_H
 
-# include "flag_warpper.h"
-
-typedef enum			e_command_type
-{
-	STANDARD,
-	MESSAGE_DIGEST,
-	CIPHER,
-}						t_command_type;
-
-typedef struct			e_commands
-{
-	t_command_type		cmd_type;
-	char				*(*func_ptr)(char *message);
-	char				*cmd_name;
-	char				*func_name;
-}						t_command;
-
-t_flag_warpper			parse_cli(int argc, char **argv);
+void		free_if(void **ptr);
+void		free_null_terminated_tab(void **ptr);
+char        *ft_strtoupper(const char *str);
 
 #endif

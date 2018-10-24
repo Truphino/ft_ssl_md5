@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_ssl_md5.h"
+#include <errno.h>
 
 static char			*append(char *dest, char *app)
 {
@@ -50,7 +51,9 @@ char			*hash_file(t_flag_warpper fw, char *filename)
 	fd = 0;
 	if (filename)
 		if ((fd = open(filename, O_RDONLY)) < 0)
+		{	
 			return (NULL);
+		}
 	line = file_to_string(fd);
 	if (line)
 		return (fw.func_ptr(line));

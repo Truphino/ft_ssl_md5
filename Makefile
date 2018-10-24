@@ -29,6 +29,7 @@ sha256.c\
 hash_file.c\
 parse_cli.c\
 errors.c\
+helpers.c\
 
 SRC_FILES = $(addprefix $(SRC_DIR)/,$(SRC_NAME_FILES))
 

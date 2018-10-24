@@ -18,11 +18,8 @@
 # include "bitswap.h"
 # include "hash_tools.h"
 # include "flag_warpper.h"
-
-# define TRUE 1
-# define FALSE 0
-# define BUF_SIZE 512
-# define FILE_COMMAND_LINE NULL
+# include "helpers.h"
+# include "macros.h"
 
 typedef struct		s_md
 {
@@ -39,5 +36,6 @@ char			*sha256(char *message);
 t_md			padding_md5_sha2(char const *message, int is_be);
 char			*h_values_hexstr(uint32_t *v, uint32_t size, int is_be);
 char			*hash_file(t_flag_warpper fw, char *filename);
+char			*file_to_string(int fd);
 
 #endif
