@@ -15,6 +15,12 @@
 
 # include "flag_warpper.h"
 
+typedef enum		e_hash_type
+{
+	FILENAME,
+	STR
+}					t_hash_type;
+
 typedef enum			e_command_type
 {
 	STANDARD,

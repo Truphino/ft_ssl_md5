@@ -85,37 +85,102 @@ unsigned char			flag_check(t_flag_warpper fw, unsigned char flag)
 	return (fw.flags & flag);
 }
 
-void					print_description(char *func_name, unsigned int quote_mark, char *mes)
+t_flag_warpper			flag_set(t_flag_warpper fw, unsigned int flag)
+{
+	fw.flags = fw.flags | flag;
+	return (fw);
+}
+
+void					print_description(char *func_name, t_hash_type type, char *mes)
 {
 	ft_putstr(func_name);
 	ft_putstr(" (");
-	if (quote_mark)
+	if (type == STR)
 		ft_putchar('"');
 	ft_putstr(mes);
-	if (quote_mark)
+	if (type == STR)
 		ft_putchar('"');
 	ft_putstr(") = ");
 }
 
-t_flag_warpper			launch_filename(char *filename, t_flag_warpper fw)
+t_flag_warpper			launch_fn_str(char *filename, t_flag_warpper fw, t_hash_type type)
 {
 	char				*md;
 
-	md  = fw.func_ptr(filename);
+	if (type == FILENAME)
+		md = hash_file(fw, filename);
+	else
+		md  = fw.func_ptr(filename);
 	if (!md)
 		exit(1);
 	if (!flag_check(fw, FLAG_R) && !(flag_check(fw, FLAG_Q)))
-		print_description(fw.func_name, 0, filename);
+		print_description(fw.func_name, type, filename);
 	ft_putstr(md);
-	if (!(flag_check(fw, FLAG_Q) && flag_check(fw, FLAG_R)))
+	if (!(flag_check(fw, FLAG_Q)) && flag_check(fw, FLAG_R))
 	{
 		ft_putchar(' ');
-		ft_putendl(filename);
+		if (type == STR)
+			ft_putchar('"');
+		ft_putstr(filename);
+		if (type == STR)
+			ft_putchar('"');
+	}
+	ft_putchar('\n');
+	return (fw);
+}
+
+t_flag_warpper			launch_p(t_flag_warpper fw)
+{
+	char				*md;
+	char				*str;
+
+	if (!(flag_check(fw, ALRD_P)))
+	{
+		str = file_to_string(0);
+		if ((md = fw.func_ptr(str)) == NULL)
+			exit(1);
+		ft_putstr(str);
+		ft_putendl(md);
+		fw = flag_set(fw, ALRD_P);
+	}
+	else
+	{
+		ft_putendl(fw.func_ptr(""));
 	}
 	return (fw);
 }
 
-t_flag_warpper			parse_args(char *p_name, int argc, char **argv, t_flag_warpper *fw)
+int			process_arg(char *p_name, int argc, char **argv, t_flag_warpper *fw, int i)
+{
+	int					j;
+
+	j = 0;
+	while (argv[i][j])
+	{
+		if (argv[i][j] == 'q')
+			*fw = flag_set(*fw, FLAG_Q);
+		else if (argv[i][j] == 'r')
+			*fw = flag_set(*fw, FLAG_R);
+		else if (argv[i][j] == 'p')
+			*fw = launch_p(*fw);
+		else if (argv[i][j] == 's')
+		{
+			if (argv[i][j + 1])
+			{
+				launch_fn_str(argv[i] + j + 1, *fw, STR);
+			}
+			else
+			{
+				if (argv[i + 1])
+					launch_fn_str(argv[i + 1], *fw, STR);
+			}
+		}
+		j++;
+	}
+	return (i);
+}
+
+t_flag_warpper			parse_args(char *p_name, int argc, char **argv, t_flag_warpper fw)
 {
 	size_t				i;
 	char				*md;
@@ -123,7 +188,7 @@ t_flag_warpper			parse_args(char *p_name, int argc, char **argv, t_flag_warpper 
 	i = 0;
 	if (argc == 0)
 	{
-		if ((md = hash_file(*fw, NULL)) != NULL)
+		if ((md = hash_file(fw, NULL)) != NULL)
 			ft_putendl(md);
 	}
 	else
@@ -132,16 +197,16 @@ t_flag_warpper			parse_args(char *p_name, int argc, char **argv, t_flag_warpper 
 		{
 			if (argv[i][0] == '-')
 			{
-				
+				i = process_arg(p_name, argc, argv, &fw, i);		
 			}
 			else
 			{
-				launch_filename(argv[i], *fw);
+				launch_fn_str(argv[i], fw, FILENAME);
 			}
 			i++;
 		}	
 	}
-	return (*fw);
+	return (fw);
 }
 
 t_flag_warpper			parse_command_cli(char *p_name, int argc, char **argv)
@@ -163,7 +228,7 @@ t_flag_warpper			parse_command_cli(char *p_name, int argc, char **argv)
 		md = hash_file(t, NULL);
 	if (md)
 		ft_putendl(md);*/
-	t = parse_args(p_name, argc - 1, argv + 1, &t);
+	t = parse_args(p_name, argc - 1, argv + 1, t);
 	return (t);
 }
 

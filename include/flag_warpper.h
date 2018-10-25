@@ -13,10 +13,11 @@
 #ifndef FLAG_WARPPER_H
 # define FLAG_WARPPER_H
 
-# define			FLAG_P 1 << 0
-# define			FLAG_Q 1 << 1
-# define			FLAG_R 1 << 2
-# define			FLAG_S 1 << 3
+# define			ALRD_P 1 << 0
+# define			FLAG_P 1 << 1
+# define			FLAG_Q 1 << 2
+# define			FLAG_R 1 << 3
+# define			FLAG_S 1 << 4
 
 typedef struct		s_flag_warpper
 {
