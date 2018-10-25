@@ -29,10 +29,10 @@ char		*ft_strtoupper(const char *str)
 	return (ret);
 }
 
-void        free_if(void **mem)
+void		free_if(void **mem)
 {
-    if (mem && *mem)
-        ft_memdel(mem);
+	if (mem && *mem)
+		ft_memdel(mem);
 }
 
 void		free_null_terminated_tab(void **ptr)
@@ -46,7 +46,13 @@ void		free_null_terminated_tab(void **ptr)
 		{
 			free(ptr[i]);
 			ptr[i] = NULL;
-			i++;	
+			i++;
 		}
 	}
+}
+
+char		*exit_ptr(char *message)
+{
+	exit(1);
+	return (message);
 }

@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   launcher.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: trecomps <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/17 11:22:38 by trecomps          #+#    #+#             */
-/*   Updated: 2018/10/19 12:27:59 by trecomps         ###   ########.fr       */
+/*   Created: 2018/10/25 17:21:31 by trecomps          #+#    #+#             */
+/*   Updated: 2018/10/25 17:21:35 by trecomps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ssl_md5.h"
+#ifndef LAUNCHER_H
+# define LAUNCHER_H
+
+#include "flag_warpper.h"
+#include "macros.h"
 #include "parse_cli.h"
 
-int			main(int argc, char **argv)
-{
-	int				fd;
-	t_flag_warpper	fw;
+void			launch_fn_str(char *filename, t_flag_warpper *fw, t_hash_type type);
+void			launch_p(t_flag_warpper *fw);
+int				launch_s(t_flag_warpper *fw, char **argv, int i, int j);
 
-	fw.func_ptr = &(md5);
-	fw = parse_cli(argc, argv);
-}
+
+#endif

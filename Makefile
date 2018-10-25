@@ -30,6 +30,9 @@ hash_file.c\
 parse_cli.c\
 errors.c\
 helpers.c\
+commands.c\
+flag_warpper.c\
+launcher.c\
 
 SRC_FILES = $(addprefix $(SRC_DIR)/,$(SRC_NAME_FILES))
 

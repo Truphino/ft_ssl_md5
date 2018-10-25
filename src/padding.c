@@ -25,7 +25,6 @@ t_md			padding_md5_sha2(char const *message, int is_be)
 	md.str = ft_memalloc(md.md_lenght + 8);
 	ft_memcpy(md.str, message, message_lenght);
 	md.str[message_lenght] = 128;
-	//md.str[message_lenght] = 0b10000000;
 	message_lenght *= 8;
 	if (is_be)
 		message_lenght = swap_uint64(message_lenght);

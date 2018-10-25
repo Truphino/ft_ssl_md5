@@ -12,7 +12,7 @@
 
 #include "ft_ssl_md5.h"
 
-void			calc_fg_i_16(uint32_t i, uint32_t v[4], uint32_t f_g[2])
+void		calc_fg_i_16(uint32_t i, uint32_t v[4], uint32_t f_g[2])
 {
 	uint32_t	f;
 	uint32_t	g;
@@ -39,7 +39,7 @@ void		calc_fg_i_32(uint32_t i, uint32_t v[4], uint32_t f_g[2])
 	if (i < 32)
 	{
 		f = (v[3] & v[1]) | ((~v[3]) & v[2]);
-		g = (5*i + 1) % 16;
+		g = (5 * i + 1) % 16;
 	}
 	else
 	{
@@ -58,7 +58,7 @@ void		calc_fg_i_48(uint32_t i, uint32_t v[4], uint32_t f_g[2])
 	if (i < 48)
 	{
 		f = v[1] ^ v[2] ^ v[3];
-		g = (3*i + 5) % 16;
+		g = (3 * i + 5) % 16;
 	}
 	else
 	{
@@ -77,7 +77,7 @@ void		calc_fg_i_64(uint32_t i, uint32_t v[4], uint32_t f_g[2])
 	if (i < 64)
 	{
 		f = v[2] ^ (v[1] | (~v[3]));
-		g = (7*i) % 16;
+		g = (7 * i) % 16;
 	}
 	else
 	{

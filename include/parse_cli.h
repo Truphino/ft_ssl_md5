@@ -26,6 +26,7 @@ typedef enum			e_command_type
 	STANDARD,
 	MESSAGE_DIGEST,
 	CIPHER,
+	SPECIAL,
 }						t_command_type;
 
 typedef struct			e_commands

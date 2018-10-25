@@ -15,16 +15,17 @@
 
 static const	t_dispatch_error g_error_list[] =
 {
-	{NO_COMMAND, "usage: #p command [command opts] [command args]"},
-	{INVALID_COMMAND, "#p: Error: '#m' is an invalid command."},
-	{NO_FILE_FOUND, "#p: #m: No such file or directory"},
-	{ACCES_ERROR, "#p: #m: Permission denied"},
-	{ILLEGAL_OPTION, "#p: illegal option -- #m"}
+	{NO_COMMAND, "usage: #p command [command opts] [command args]\n"},
+	{INVALID_COMMAND, "#p: Error: '#m' is an invalid command.\n"},
+	{NO_FILE_FOUND, "#p: #m: No such file or directory\n"},
+	{ACCES_ERROR, "#p: #m: Permission denied\n"},
+	{ILLEGAL_OPTION, "#p: illegal option -- #m\n"}
 };
 
-static const size_t	g_num_errors = sizeof(g_error_list) / sizeof(t_dispatch_error);
+static const size_t	g_num_errors =
+sizeof(g_error_list) / sizeof(t_dispatch_error);
 
-void			print_command_replace(char *command, char *p_name, char *message)
+void		print_command_replace(char *command, char *p_name, char *message)
 {
 	size_t		i;
 	size_t		start;
@@ -34,7 +35,7 @@ void			print_command_replace(char *command, char *p_name, char *message)
 	while (command[i])
 	{
 		while (command[i] && command[i] != '#')
-	 		i++;
+			i++;
 		if (!command[i])
 			ft_putstr(command + start);
 		else
@@ -51,17 +52,16 @@ void			print_command_replace(char *command, char *p_name, char *message)
 			start = i;
 		}
 	}
-	ft_putchar('\n');
 }
 
-void			ft_putsbstr(char *str, size_t end)
+void		ft_putsbstr(char *str, size_t end)
 {
 	if (end == 0 || end > ft_strlen(str))
 		end = ft_strlen(str) - 1;
 	write(1, str, end);
 }
 
-void			print_error(t_errors_type er_type, char *p_name, char *message)
+void		print_error(t_errors_type er_type, char *p_name, char *message)
 {
 	size_t		i;
 
@@ -69,7 +69,8 @@ void			print_error(t_errors_type er_type, char *p_name, char *message)
 	while (i < g_num_errors)
 	{
 		if (er_type == g_error_list[i].er_type)
-			print_command_replace(g_error_list[i].error_message, p_name, message);
+			print_command_replace(g_error_list[i].error_message,
+				p_name, message);
 		i++;
 	}
 }

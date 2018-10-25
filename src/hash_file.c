@@ -27,7 +27,7 @@ static char			*append(char *dest, char *app)
 	return (final);
 }
 
-char			*file_to_string(int fd)
+char				*file_to_string(int fd)
 {
 	char		*buf;
 	char		*file;
@@ -44,7 +44,7 @@ char			*file_to_string(int fd)
 	return (file);
 }
 
-char			*hash_file(t_flag_warpper fw, char *filename)
+char				*hash_file(t_flag_warpper fw, char *filename)
 {
 	char		*line;
 	int			fd;

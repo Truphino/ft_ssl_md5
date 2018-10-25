@@ -15,7 +15,7 @@
 #include "sha_helpers.h"
 
 static uint32_t		sha_sigma_vals(uint32_t x,
-									uint32_t a, uint32_t b, uint32_t c)
+						uint32_t a, uint32_t b, uint32_t c)
 {
 	x = cr_rotate(x, a) ^ cr_rotate(x, b) ^ cr_rotate(x, c);
 	return (x);

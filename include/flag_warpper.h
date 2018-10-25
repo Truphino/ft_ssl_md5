@@ -26,7 +26,11 @@ typedef struct		s_flag_warpper
 	char			*p_name;
 	char			*(*func_ptr)(char *);
 	char			*func_name;
-	unsigned char	flags;
+	unsigned int	flags;
 }					t_flag_warpper;
+
+t_flag_warpper			flag_set(t_flag_warpper *fw, unsigned int flag);
+unsigned int			flag_check(t_flag_warpper fw, unsigned int flag);
+t_flag_warpper			init_flag_warpper(char *p_name);
 
 #endif

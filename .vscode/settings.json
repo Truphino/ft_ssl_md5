@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "flag_warpper.h": "c",
+        "parse_cli.h": "c"
+    }
+}

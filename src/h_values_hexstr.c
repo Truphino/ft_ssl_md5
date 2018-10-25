@@ -12,7 +12,7 @@
 
 #include "ft_ssl_md5.h"
 
-void		dec_to_hex(uint32_t dec, char *buf)
+void			dec_to_hex(uint32_t dec, char *buf)
 {
 	unsigned int	i;
 	unsigned int	tmp;
