@@ -10,12 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef     HELPERS_H
-# define	HELPERS_H
+#ifndef HELPERS_H
+# define HELPERS_H
 
-void		free_if(void **ptr);
-void		free_null_terminated_tab(void **ptr);
-char        *ft_strtoupper(const char *str);
-char        *exit_ptr(char *null);
+void	free_if(void **ptr);
+void	free_null_terminated_tab(void **ptr);
+char	*ft_strtoupper(const char *str);
+char	*exit_ptr(char *null);
 
 #endif

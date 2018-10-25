@@ -13,13 +13,12 @@
 #ifndef LAUNCHER_H
 # define LAUNCHER_H
 
-#include "flag_warpper.h"
-#include "macros.h"
-#include "parse_cli.h"
+# include "flag_warpper.h"
+# include "macros.h"
+# include "parse_cli.h"
 
-void			launch_fn_str(char *filename, t_flag_warpper *fw, t_hash_type type);
-void			launch_p(t_flag_warpper *fw);
-int				launch_s(t_flag_warpper *fw, char **argv, int i, int j);
-
+void	launch_fn_str(char *filename, t_flag_warpper *fw, t_hash_type type);
+void	launch_p(t_flag_warpper *fw);
+int		launch_s(t_flag_warpper *fw, char **argv, int i, int j);
 
 #endif

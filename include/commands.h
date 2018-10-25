@@ -17,6 +17,6 @@
 
 void				print_command_list(void);
 void				parse_command_name(char *cmd_name, t_flag_warpper *fw);
-void		        print_usage(t_flag_warpper fw);
+void				print_usage(t_flag_warpper fw);
 
 #endif

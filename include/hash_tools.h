@@ -13,7 +13,7 @@
 #ifndef HASH_TOOLS_H
 # define HASH_TOOLS_H
 
-#include <stdint.h>
+# include <stdint.h>
 
 uint32_t		cl_rotate(uint32_t x, uint32_t c);
 uint32_t		cr_rotate(uint32_t x, uint32_t c);

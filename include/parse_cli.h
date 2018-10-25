@@ -15,11 +15,11 @@
 
 # include "flag_warpper.h"
 
-typedef enum		e_hash_type
+typedef enum			e_hash_type
 {
 	FILENAME,
 	STR
-}					t_hash_type;
+}						t_hash_type;
 
 typedef enum			e_command_type
 {
@@ -29,7 +29,7 @@ typedef enum			e_command_type
 	SPECIAL,
 }						t_command_type;
 
-typedef struct			e_commands
+typedef struct			s_commands
 {
 	t_command_type		cmd_type;
 	char				*(*func_ptr)(char *message);

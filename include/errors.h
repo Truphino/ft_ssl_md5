@@ -13,8 +13,8 @@
 #ifndef ERRORS_H
 # define ERRORS_H
 
-#include "libft.h"
-#include <errno.h>
+# include "libft.h"
+# include <errno.h>
 
 typedef enum		e_errors_type
 {
