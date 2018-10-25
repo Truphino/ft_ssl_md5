@@ -13,29 +13,53 @@
 #include "errors.h"
 #include "macros.h"
 
-void			no_command_error(char *p_name, char *message)
-{
-	(void)message;
-	ft_putstr("usage: ");
-	ft_putstr(p_name);
-	ft_putstr(" command [command opts] [command args]\n");
-}
-
-void			invalid_command_error(char *p_name, char *message)
-{
-	ft_putstr(p_name);
-	ft_putstr(": Error: \'");
-	ft_putstr(message);
-	ft_putstr("\' is an invalid command.\n");
-}
-
 static const	t_dispatch_error g_error_list[] =
 {
-	{NO_COMMAND, &no_command_error},
-	{INVALID_COMMAND, &invalid_command_error}
+	{NO_COMMAND, "usage: #p command [command opts] [command args]"},
+	{INVALID_COMMAND, "#p: Error: '#m' is an invalid command."},
+	{NO_FILE_FOUND, "#p: #m: No such file or directory"},
+	{ACCES_ERROR, "#p: #m: Permission denied"},
+	{ILLEGAL_OPTION, "#p: illegal option -- #m"}
 };
 
 static const size_t	g_num_errors = sizeof(g_error_list) / sizeof(t_dispatch_error);
+
+void			print_command_replace(char *command, char *p_name, char *message)
+{
+	size_t		i;
+	size_t		start;
+
+	i = 0;
+	start = 0;
+	while (command[i])
+	{
+		while (command[i] && command[i] != '#')
+	 		i++;
+		if (!command[i])
+			ft_putstr(command + start);
+		else
+		{
+			if (i > start)
+				write(1, command + start, i - start);
+			if (command[i + 1] == 'p')
+				ft_putstr(p_name);
+			else if (command[i + 1] == 'm')
+				ft_putstr(message);
+			else
+				ft_putchar(command[i + 1]);
+			i += 2;
+			start = i;
+		}
+	}
+	ft_putchar('\n');
+}
+
+void			ft_putsbstr(char *str, size_t end)
+{
+	if (end == 0 || end > ft_strlen(str))
+		end = ft_strlen(str) - 1;
+	write(1, str, end);
+}
 
 void			print_error(t_errors_type er_type, char *p_name, char *message)
 {
@@ -45,7 +69,7 @@ void			print_error(t_errors_type er_type, char *p_name, char *message)
 	while (i < g_num_errors)
 	{
 		if (er_type == g_error_list[i].er_type)
-			g_error_list[i].func_ptr(p_name, message);
+			print_command_replace(g_error_list[i].error_message, p_name, message);
 		i++;
 	}
 }

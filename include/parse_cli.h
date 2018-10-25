@@ -34,6 +34,7 @@ typedef struct			e_commands
 	char				*(*func_ptr)(char *message);
 	char				*cmd_name;
 	char				*func_name;
+	char				*func_usage;
 }						t_command;
 
 t_flag_warpper			parse_cli(int argc, char **argv);

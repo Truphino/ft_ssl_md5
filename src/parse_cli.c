@@ -16,8 +16,8 @@
 
 static const			t_command g_command_list[] =
 {
-	{MESSAGE_DIGEST, &md5, "md5", "MD5"},
-	{MESSAGE_DIGEST, &sha256, "sha256", "SHA256"}
+	{MESSAGE_DIGEST, &md5, "md5", "MD5", "usage: md5 [-pqr] [-s string] [files ...]"},
+	{MESSAGE_DIGEST, &sha256, "sha256", "SHA256", "usage: sha256 [-pqr] [-s string] [files ...]"}
 };
 
 static const size_t			g_num_commands = sizeof(g_command_list) / sizeof(t_command);
@@ -60,24 +60,22 @@ void					print_command_list(void)
 	print_command_list_type(CIPHER);
 }
 
-t_flag_warpper			parse_command_name(char *cmd_name)
+void				parse_command_name(char *cmd_name, t_flag_warpper *fw)
 {
 	size_t				i;
-	t_flag_warpper		fw;
 
 	i = 0;
-	fw.func_ptr = NULL;
-	fw.flags = 0;
+	fw->func_ptr = NULL;
+	fw->flags = 0;
 	while (i < g_num_commands)
 	{
 		if (ft_strcmp(cmd_name, g_command_list[i].cmd_name) == 0)
 		{
-			fw.func_ptr = g_command_list[i].func_ptr;
-			fw.func_name = g_command_list[i].func_name;
+			fw->func_ptr = g_command_list[i].func_ptr;
+			fw->func_name = g_command_list[i].func_name;
 		}
 		i++;
 	}
-	return (fw);
 }
 
 unsigned char			flag_check(t_flag_warpper fw, unsigned char flag)
@@ -85,10 +83,10 @@ unsigned char			flag_check(t_flag_warpper fw, unsigned char flag)
 	return (fw.flags & flag);
 }
 
-t_flag_warpper			flag_set(t_flag_warpper fw, unsigned int flag)
+t_flag_warpper			flag_set(t_flag_warpper *fw, unsigned int flag)
 {
-	fw.flags = fw.flags | flag;
-	return (fw);
+	fw->flags = fw->flags | flag;
+	return (*fw);
 }
 
 void					print_description(char *func_name, t_hash_type type, char *mes)
@@ -103,20 +101,21 @@ void					print_description(char *func_name, t_hash_type type, char *mes)
 	ft_putstr(") = ");
 }
 
-t_flag_warpper			launch_fn_str(char *filename, t_flag_warpper fw, t_hash_type type)
+void			launch_fn_str(char *filename, t_flag_warpper *fw, t_hash_type type)
 {
 	char				*md;
 
+	flag_set(fw, LAUNCH);
 	if (type == FILENAME)
-		md = hash_file(fw, filename);
+		md = hash_file(*fw, filename);
 	else
-		md  = fw.func_ptr(filename);
+		md  = fw->func_ptr(filename);
 	if (!md)
 		exit(1);
-	if (!flag_check(fw, FLAG_R) && !(flag_check(fw, FLAG_Q)))
-		print_description(fw.func_name, type, filename);
+	if (filename && !flag_check(*fw, FLAG_R) && !(flag_check(*fw, FLAG_Q)))
+		print_description(fw->func_name, type, filename);
 	ft_putstr(md);
-	if (!(flag_check(fw, FLAG_Q)) && flag_check(fw, FLAG_R))
+	if (filename && !(flag_check(*fw, FLAG_Q)) && flag_check(*fw, FLAG_R))
 	{
 		ft_putchar(' ');
 		if (type == STR)
@@ -126,61 +125,84 @@ t_flag_warpper			launch_fn_str(char *filename, t_flag_warpper fw, t_hash_type ty
 			ft_putchar('"');
 	}
 	ft_putchar('\n');
-	return (fw);
 }
 
-t_flag_warpper			launch_p(t_flag_warpper fw)
+void				launch_p(t_flag_warpper *fw)
 {
 	char				*md;
 	char				*str;
 
-	if (!(flag_check(fw, ALRD_P)))
+	if (!(flag_check(*fw, ALRD_P)))
 	{
 		str = file_to_string(0);
-		if ((md = fw.func_ptr(str)) == NULL)
+		if ((md = fw->func_ptr(str)) == NULL)
 			exit(1);
 		ft_putstr(str);
 		ft_putendl(md);
-		fw = flag_set(fw, ALRD_P);
+		flag_set(fw, ALRD_P);
 	}
 	else
 	{
-		ft_putendl(fw.func_ptr(""));
+		ft_putendl(fw->func_ptr(""));
 	}
-	return (fw);
 }
 
-int			process_arg(char *p_name, int argc, char **argv, t_flag_warpper *fw, int i)
+void		print_usage(t_flag_warpper fw)
+{
+	int		i;
+
+	i = 0;
+	while (i < g_num_commands)
+	{
+		if (fw.func_ptr == g_command_list[i].func_ptr)
+		{
+			ft_putendl(g_command_list[i].func_usage);
+		}
+		i++;
+	}
+}
+
+int			process_arg(int argc, char **argv, t_flag_warpper *fw, int i)
 {
 	int					j;
 
 	j = 0;
+	if (argv[i][j] == '-')
+		j++;
 	while (argv[i][j])
 	{
 		if (argv[i][j] == 'q')
-			*fw = flag_set(*fw, FLAG_Q);
+			flag_set(fw, FLAG_Q);
 		else if (argv[i][j] == 'r')
-			*fw = flag_set(*fw, FLAG_R);
+			flag_set(fw, FLAG_R);
 		else if (argv[i][j] == 'p')
-			*fw = launch_p(*fw);
+			launch_p(fw);
 		else if (argv[i][j] == 's')
 		{
 			if (argv[i][j + 1])
 			{
-				launch_fn_str(argv[i] + j + 1, *fw, STR);
+				launch_fn_str(argv[i] + j + 1, fw, STR);
 			}
 			else
 			{
 				if (argv[i + 1])
-					launch_fn_str(argv[i + 1], *fw, STR);
+					launch_fn_str(argv[i + 1], fw, STR);
+				i++;
 			}
+		}
+		else
+		{
+			argv[i][j + 1] = '\0';
+			print_error(ILLEGAL_OPTION, (*fw).p_name, &(argv[i][j]));
+			print_usage(*fw);
+			exit(1);
 		}
 		j++;
 	}
 	return (i);
 }
 
-t_flag_warpper			parse_args(char *p_name, int argc, char **argv, t_flag_warpper fw)
+void				parse_args(int argc, char **argv, t_flag_warpper *fw)
 {
 	size_t				i;
 	char				*md;
@@ -188,82 +210,88 @@ t_flag_warpper			parse_args(char *p_name, int argc, char **argv, t_flag_warpper 
 	i = 0;
 	if (argc == 0)
 	{
-		if ((md = hash_file(fw, NULL)) != NULL)
+		if ((md = hash_file(*fw, NULL)) != NULL)
+		{
 			ft_putendl(md);
+			flag_set(fw, L_CMDL | LAUNCH);
+		}
 	}
 	else
 	{
 		while (i < argc)
 		{
 			if (argv[i][0] == '-')
-			{
-				i = process_arg(p_name, argc, argv, &fw, i);		
-			}
+				i = process_arg(argc, argv, fw, i);		
 			else
-			{
 				launch_fn_str(argv[i], fw, FILENAME);
-			}
 			i++;
 		}	
 	}
-	return (fw);
+	if (!(flag_check(*fw, ALRD_P)) && !(flag_check(*fw, LAUNCH)))
+	{
+		launch_fn_str(NULL, fw, FILENAME);
+	}
 }
 
-t_flag_warpper			parse_command_cli(char *p_name, int argc, char **argv)
+void				parse_command_cli(int argc, char **argv, t_flag_warpper *fw)
 {
-	t_flag_warpper		t;
 	size_t				i;
 	char				*md;
 
-	t = parse_command_name(argv[0]);
-	if (t.func_ptr == NULL)
+	parse_command_name(argv[0], fw);
+	if (fw->func_ptr == NULL)
 	{
-		print_error(INVALID_COMMAND, p_name, argv[0]);
+		print_error(INVALID_COMMAND, fw->p_name, argv[0]);
 		print_command_list();
-		exit(1);
 	}
-	/*if (argc > 1)
-		md = hash_file(t, argv[1]);
 	else
-		md = hash_file(t, NULL);
-	if (md)
-		ft_putendl(md);*/
-	t = parse_args(p_name, argc - 1, argv + 1, t);
-	return (t);
+		parse_args(argc - 1, argv + 1, fw);
 }
 
-t_flag_warpper			parse_no_command(char *p_name)
+void			parse_no_command(t_flag_warpper *fw)
 {
-	char				*cli;
 	char				**split;
 	size_t				i;
-	t_flag_warpper		t;
 	char				*line;
 	int					ret;
 
 	i = 0;
-	ret = get_next_line(0, &line);
-	split = ft_strsplit(line, ' ');
-	while (split[i] != NULL)
+	ret = 1;
+	while (ret && !flag_check(*fw, L_CMDL))
 	{
-		ft_putstr("====>");
-		ft_putendl(split[i]);
-		i++;
+		ft_putstr("ft_openssl => ");
+		ret = get_next_line(0, &line);
+		if (ret && line[0] != '\0')
+		{
+			split = ft_strsplit(line, ' ');
+			while (split[i] != NULL)
+				i++;
+			parse_command_cli(i, split, fw);
+			free_null_terminated_tab((void **)split);
+		}
 	}
-	t = parse_command_cli(p_name, i, split);
-	free_if((void **)&cli);
-	free_null_terminated_tab((void **)split);
-	return (t);
+}
+
+t_flag_warpper			init_flag_warpper(char *p_name)
+{
+	t_flag_warpper		fw;
+
+	fw.p_name = p_name;
+	fw.func_ptr = NULL;
+	fw.func_name = NULL;
+	fw.flags = 0;
+	return (fw);
 }
 
 t_flag_warpper			parse_cli(int argc, char **argv)
 {
 	t_flag_warpper		fw;
 
+	fw = init_flag_warpper(argv[0]);
 	if (argc < 2)
-		fw = parse_no_command(argv[0]);
+		parse_no_command(&fw);
 	else
-		fw = parse_command_cli(argv[0], argc - 1, argv + 1);
+		parse_command_cli(argc - 1, argv + 1, &fw);
 
 	return (fw);
 }

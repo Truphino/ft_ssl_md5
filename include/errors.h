@@ -20,12 +20,15 @@ typedef enum		e_errors_type
 {
 	NO_COMMAND,
 	INVALID_COMMAND,
+	NO_FILE_FOUND = ENOENT,
+	ACCES_ERROR = EACCES,
+	ILLEGAL_OPTION,
 }					t_errors_type;
 
 typedef struct		s_dispatch_error
 {
 	t_errors_type	er_type;
-	void			(*func_ptr)(char *p_name, char* message);
+	char			*error_message;
 }					t_dispatch_error;
 
 void				print_error(t_errors_type er_type, char *p_name, char *mes);

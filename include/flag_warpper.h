@@ -18,9 +18,12 @@
 # define			FLAG_Q 1 << 2
 # define			FLAG_R 1 << 3
 # define			FLAG_S 1 << 4
+# define			LAUNCH 1 << 5
+# define			L_CMDL 1 << 6
 
 typedef struct		s_flag_warpper
 {
+	char			*p_name;
 	char			*(*func_ptr)(char *);
 	char			*func_name;
 	unsigned char	flags;
