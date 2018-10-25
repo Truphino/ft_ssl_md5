@@ -38,7 +38,6 @@ int				process_arg(int argc, char **argv, t_flag_warpper *fw, int i)
 			print_usage(*fw);
 			exit(1);
 		}
-		j++;
 	}
 	return (i);
 }
