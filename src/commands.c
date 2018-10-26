@@ -77,6 +77,7 @@ void				parse_command_name(char *cmd_name, t_flag_warpper *fw)
 		{
 			fw->func_ptr = g_command_list[i].func_ptr;
 			fw->func_name = g_command_list[i].func_name;
+			fw->cmd_name = g_command_list[i].cmd_name;
 		}
 		i++;
 	}
@@ -84,7 +85,7 @@ void				parse_command_name(char *cmd_name, t_flag_warpper *fw)
 
 void				print_usage(t_flag_warpper fw)
 {
-	int		i;
+	uint32_t		i;
 
 	i = 0;
 	while (i < g_num_commands)

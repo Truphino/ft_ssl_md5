@@ -74,7 +74,7 @@ void					md5_main_loop(uint32_t *chunk, uint32_t v[4])
 char					*md5(char *message)
 {
 	t_md		md;
-	int			offset;
+	uint32_t	offset;
 	uint32_t	*chunk;
 	uint32_t	v[4];
 	uint32_t	temp[4];

@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "errors.h"
-#include "macros.h"
 
 static const	t_dispatch_error g_error_list[] =
 {
@@ -19,7 +18,8 @@ static const	t_dispatch_error g_error_list[] =
 	{INVALID_COMMAND, "#p: Error: '#m' is an invalid command.\n"},
 	{NO_FILE_FOUND, "#p: #m: No such file or directory\n"},
 	{ACCES_ERROR, "#p: #m: Permission denied\n"},
-	{ILLEGAL_OPTION, "#p: illegal option -- #m\n"}
+	{ILLEGAL_OPTION, "#p: illegal option -- #m\n"},
+	{NO_ARGS, "#p: : option requires an argument -- #m\n"}
 };
 
 static const size_t	g_num_errors =

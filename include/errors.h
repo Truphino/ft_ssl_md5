@@ -23,6 +23,7 @@ typedef enum		e_errors_type
 	NO_FILE_FOUND = ENOENT,
 	ACCES_ERROR = EACCES,
 	ILLEGAL_OPTION,
+	NO_ARGS,
 }					t_errors_type;
 
 typedef struct		s_dispatch_error

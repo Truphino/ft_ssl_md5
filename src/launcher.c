@@ -15,6 +15,8 @@
 #include "parse_cli.h"
 #include "libft.h"
 #include "ft_ssl_md5.h"
+#include "errors.h"
+#include "commands.h"
 
 void	print_description(char *func_name, t_hash_type type, char *mes)
 {
@@ -80,11 +82,16 @@ int		launch_s(t_flag_warpper *fw, char **argv, int i, int j)
 	{
 		launch_fn_str(argv[i] + j + 1, fw, STR);
 	}
+	else if (argv[i + 1])
+	{
+		launch_fn_str(argv[i + 1], fw, STR);
+		i += 1;
+	}
 	else
 	{
-		if (argv[i + 1])
-			launch_fn_str(argv[i + 1], fw, STR);
-		i += 1;
+		print_error(NO_ARGS, fw->cmd_name, "s");
+		print_usage(*fw);
+		exit(1);
 	}
 	return (i);
 }

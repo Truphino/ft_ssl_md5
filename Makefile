@@ -62,7 +62,7 @@ $(NAME): $(OBJ_FILES)
 all: $(NAME)
 
 $(OBJ_DIR)/%.o:$(SRC_DIR)/%.c $(INC_FILES)
-	gcc -g -c -I$(INC_DIR) $< -o $@
+	gcc -g $(FLAGS) -c -I$(INC_DIR) $< -o $@
 
 clean:
 	make -C ./lib/libft/ clean

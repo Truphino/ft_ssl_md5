@@ -15,7 +15,6 @@
 
 int			main(int argc, char **argv)
 {
-	int				fd;
 	t_flag_warpper	fw;
 
 	fw.func_ptr = &(md5);

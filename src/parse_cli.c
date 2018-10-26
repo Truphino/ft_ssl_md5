@@ -16,7 +16,7 @@
 #include "commands.h"
 #include "launcher.h"
 
-int				process_arg(int argc, char **argv, t_flag_warpper *fw, int i)
+int				process_arg(char **argv, t_flag_warpper *fw, int i)
 {
 	int					j;
 
@@ -44,7 +44,7 @@ int				process_arg(int argc, char **argv, t_flag_warpper *fw, int i)
 
 void			parse_args(int argc, char **argv, t_flag_warpper *fw)
 {
-	size_t				i;
+	int					i;
 	char				*md;
 
 	i = 0;
@@ -61,7 +61,7 @@ void			parse_args(int argc, char **argv, t_flag_warpper *fw)
 		while (i < argc)
 		{
 			if (argv[i][0] == '-')
-				i = process_arg(argc, argv, fw, i);
+				i = process_arg(argv, fw, i);
 			else
 				launch_fn_str(argv[i], fw, FILENAME);
 			i++;
@@ -73,9 +73,6 @@ void			parse_args(int argc, char **argv, t_flag_warpper *fw)
 
 void			parse_command_cli(int argc, char **argv, t_flag_warpper *fw)
 {
-	size_t				i;
-	char				*md;
-
 	parse_command_name(argv[0], fw);
 	if (fw->func_ptr == NULL)
 	{

@@ -26,6 +26,7 @@ typedef struct		s_flag_warpper
 	char			*p_name;
 	char			*(*func_ptr)(char *);
 	char			*func_name;
+	char			*cmd_name;
 	unsigned int	flags;
 }					t_flag_warpper;
 
