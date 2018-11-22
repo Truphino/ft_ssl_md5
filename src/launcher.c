@@ -36,24 +36,28 @@ void	launch_fn_str(char *filename, t_flag_warpper *fw, t_hash_type type)
 
 	flag_set(fw, LAUNCH);
 	if (type == FILENAME)
+	{
+		flag_set(fw, F_MODE);
 		md = hash_file(*fw, filename);
+	}
 	else
 		md = fw->func_ptr(filename);
-	if (!md)
-		exit(1);
-	if (filename && !flag_check(*fw, FLAG_R) && !(flag_check(*fw, FLAG_Q)))
-		print_description(fw->func_name, type, filename);
-	ft_putstr(md);
-	if (filename && !(flag_check(*fw, FLAG_Q)) && flag_check(*fw, FLAG_R))
+	if (md)
 	{
-		ft_putchar(' ');
-		if (type == STR)
-			ft_putchar('"');
-		ft_putstr(filename);
-		if (type == STR)
-			ft_putchar('"');
+		if (filename && !flag_check(*fw, FLAG_R) && !(flag_check(*fw, FLAG_Q)))
+			print_description(fw->func_name, type, filename);
+		ft_putstr(md);
+		if (filename && !(flag_check(*fw, FLAG_Q)) && flag_check(*fw, FLAG_R))
+		{
+			ft_putchar(' ');
+			if (type == STR)
+				ft_putchar('"');
+			ft_putstr(filename);
+			if (type == STR)
+				ft_putchar('"');
+		}
+		ft_putchar('\n');
 	}
-	ft_putchar('\n');
 }
 
 void	launch_p(t_flag_warpper *fw)

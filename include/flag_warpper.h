@@ -20,6 +20,7 @@
 # define FLAG_S 1 << 4
 # define LAUNCH 1 << 5
 # define L_CMDL 1 << 6
+# define F_MODE 1 << 7
 
 typedef struct		s_flag_warpper
 {

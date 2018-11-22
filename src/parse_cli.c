@@ -60,7 +60,7 @@ void			parse_args(int argc, char **argv, t_flag_warpper *fw)
 	{
 		while (i < argc)
 		{
-			if (argv[i][0] == '-')
+			if (!flag_check(*fw, F_MODE) && argv[i][0] == '-')
 				i = process_arg(argv, fw, i);
 			else
 				launch_fn_str(argv[i], fw, FILENAME);
